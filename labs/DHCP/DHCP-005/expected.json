@@ -1,0 +1,11 @@
+{
+  "case_id": "DHCP-005",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DHCP/DHCP-005/DHCP-005.pkt",
+  "topology_note": "R1 is the DHCP server and gateway (Gi0/0.10 = 10.10.10.1/24) for VLAN 10. 15 PCs in VLAN 10.",
+  "expected_fault": "DHCP pool default-router is set to 10.10.10.254 (no device exists at that address) instead of 10.10.10.1 (R1's actual gateway interface). PCs receive the wrong gateway via DHCP and cannot route off-subnet.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip dhcp pool\n\nPool VLAN10-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 254\n Leased addresses               : 15\n Pending event                  : none\n\nR1# show running-config | section dhcp\nip dhcp excluded-address 10.10.10.1 10.10.10.10\nip dhcp pool VLAN10-POOL\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.254\n dns-server 10.10.10.5\n\nR1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0.10      10.10.10.1      YES manual up                    up\n\nC:\\> ipconfig\nEthernet adapter Ethernet0:\n   IPv4 Address. . . . . . . . . : 10.10.10.11\n   Subnet Mask . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . : 10.10.10.254"
+}

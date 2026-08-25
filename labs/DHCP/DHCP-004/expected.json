@@ -1,0 +1,11 @@
+{
+  "case_id": "DHCP-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DHCP/DHCP-004/DHCP-004.pkt",
+  "topology_note": "R1 is the DHCP server for VLAN 10. An administrator recently added a broad exclusion range as a 'security measure'. 30 PCs need addresses.",
+  "expected_fault": "The DHCP excluded-address range 10.10.10.1 through 10.10.10.250 is overly broad, leaving only 4 usable addresses (.251-.254). The pool's total of 254 addresses is a red herring \u2014 the exclusion negates nearly all of them.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip dhcp pool\n\nPool VLAN10-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 254\n Leased addresses               : 5\n Pending event                  : none\n 1 subnet is currently in the pool :\n Current index        IP address range                    Leased addresses\n 10.10.10.255         10.10.10.1       - 10.10.10.254    5\n\nR1# show running-config | section dhcp\nip dhcp excluded-address 10.10.10.1 10.10.10.250\nip dhcp pool VLAN10-POOL\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.1\n dns-server 10.10.10.5\n\nR1# show ip dhcp binding\nIP address       Client-ID/              Lease expiration        Type\n                 Hardware address\n10.10.10.251     0100.1a2b.3c01          Aug 09 2026 08:00 AM    Automatic\n10.10.10.252     0100.1a2b.3c02          Aug 09 2026 08:01 AM    Automatic\n10.10.10.253     0100.1a2b.3c03          Aug 09 2026 08:02 AM    Automatic\n10.10.10.254     0100.1a2b.3c04          Aug 09 2026 08:03 AM    Automatic\n10.10.10.250     0100.1a2b.3c05          Aug 09 2026 08:04 AM    Automatic"
+}

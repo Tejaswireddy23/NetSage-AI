@@ -1,0 +1,11 @@
+{
+  "case_id": "VLAN-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/VLAN/VLAN-003/VLAN-003.pkt",
+  "topology_note": "SW1 trunk Gi0/1 to SW2 trunk Gi0/1. VLAN 50 (Engineering, 10.10.50.0/24) was recently added. File server on SW1 Fa0/15 in VLAN 50.",
+  "expected_fault": "VLAN 50 is not in the allowed VLAN list on the trunk port Gi0/1 (only VLANs 1, 10, 20 are allowed), so VLAN 50 traffic cannot cross between SW1 and SW2.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW1# show interfaces Gi0/1 trunk\n\nPort        Mode         Encapsulation  Status        Native vlan\nGi0/1       on           802.1q         trunking      1\n\nPort        Vlans allowed on trunk\nGi0/1       1,10,20\n\nPort        Vlans allowed and active in management domain\nGi0/1       1,10,20\n\nPort        Vlans in spanning tree forwarding state and not pruned\nGi0/1       1,10,20\n\nSW1# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Fa0/22, Fa0/23, Fa0/24\n10   Sales                            active    Fa0/1, Fa0/2, Fa0/3\n20   HR                               active    Fa0/6, Fa0/7, Fa0/8\n50   Engineering                      active    Fa0/15, Fa0/16\n1002 fddi-default                     act/unsup"
+}

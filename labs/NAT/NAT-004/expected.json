@@ -1,0 +1,11 @@
+{
+  "case_id": "NAT-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/NAT/NAT-004/NAT-004.pkt",
+  "topology_note": "R1 has static NAT configured for the web server. S0/0/0 (203.0.113.1/24) is the outside interface. Gi0/0.10 is the inside interface. ACL 180 is applied inbound on S0/0/0.",
+  "expected_fault": "Static NAT maps 203.0.113.10 to inside local address 10.10.10.50, but the actual web server's IP is 10.10.10.15. The NAT translation sends traffic to a non-existent host. The ACL correctly permits HTTP/HTTPS to the public IP \u2014 a red herring suggesting the ACL is the issue when it actually has zero matches because NAT is translating to the wrong host.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip nat translations\nPro Inside global       Inside local        Outside local      Outside global\n--- 203.0.113.10        10.10.10.50         ---                ---\n\nR1# show running-config | include nat\nip nat inside source static 10.10.10.50 203.0.113.10\n\nR1# show access-lists\nExtended IP access list 180\n    10 permit tcp any host 203.0.113.10 eq 80 (0 matches)\n    20 permit tcp any host 203.0.113.10 eq 443 (0 matches)\n    30 deny   ip any any (45 matches)\n\nR1# show ip interface Serial0/0/0\nSerial0/0/0 is up, line protocol is up\n  Ingoing access list is 180\n  Outgoing access list is not set\n\nR1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0.10      10.10.10.1      YES manual up                    up\nSerial0/0/0                203.0.113.1     YES manual up                    up"
+}

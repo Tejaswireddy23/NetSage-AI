@@ -1,0 +1,11 @@
+{
+  "case_id": "ACL-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ACL/ACL-003/ACL-003.pkt",
+  "topology_note": "R1 has subinterfaces for VLANs 10 and 20. ACL 130 was applied to Gi0/0.20.",
+  "expected_fault": "ACL 130 only has permit statements for the 10.10.10.0/24 (VLAN 10) source network. There is no permit statement for 10.10.20.0/24 traffic. The implicit deny all at the end of the ACL drops all VLAN 20 traffic. The administrator applied a VLAN 10 ACL to the VLAN 20 interface by mistake.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show access-lists\nExtended IP access list 130\n    10 permit tcp 10.10.10.0 0.0.0.255 any eq 80 (340 matches)\n    20 permit tcp 10.10.10.0 0.0.0.255 any eq 443 (210 matches)\n    30 permit icmp 10.10.10.0 0.0.0.255 any (90 matches)\n\nR1# show ip interface GigabitEthernet0/0.20\nGigabitEthernet0/0.20 is up, line protocol is up\n  Internet address is 10.10.20.1/24\n  Ingoing access list is 130\n  Outgoing access list is not set"
+}

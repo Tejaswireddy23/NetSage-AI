@@ -1,0 +1,11 @@
+{
+  "case_id": "DNS-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DNS/DNS-004/DNS-004.pkt",
+  "topology_note": "DNS server is connected to SW1 Fa0/20 in VLAN 10. R1 is the gateway. PCs are in VLAN 10 (10.10.10.0/24).",
+  "expected_fault": "The DNS server at 10.10.10.5 is powered off or its NIC is disconnected \u2014 ARP resolution for 10.10.10.5 shows 'Incomplete' on R1. The switch port being up/connected is a red herring (the port may be connected but the server's NIC or OS is not responding).",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW1# show interfaces Fa0/20 status\nPort      Name       Status       Vlan       Duplex  Speed Type\nFa0/20    DNS-SRV    connected    10         a-full  a-100 10/100BaseTX\n\nSW1# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n10   Sales                            active    Fa0/1, Fa0/2, Fa0/3, Fa0/20\n\nR1# show arp\nProtocol  Address          Age (min)  Hardware Addr   Type   Interface\nInternet  10.10.10.1              -   0019.aa6b.3401  ARPA   Gi0/0.10\nInternet  10.10.10.11             8   00d0.ba12.3401  ARPA   Gi0/0.10\nInternet  10.10.10.5              0   Incomplete      ARPA   Gi0/0.10\n\nC:\\> ping 10.10.10.5\nRequest timed out.\nRequest timed out."
+}

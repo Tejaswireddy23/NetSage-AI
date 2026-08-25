@@ -1,0 +1,11 @@
+{
+  "case_id": "RT-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ROUTING/RT-001/RT-001.pkt",
+  "topology_note": "R1 has subinterfaces for VLANs 10, 20, 30. R2 connects the server farm 10.10.30.0/24 via a serial link (10.10.99.0/30) to R1. Static routing is used.",
+  "expected_fault": "R1 has a static route to 10.10.30.0/24 via R2, but R2 has no return route to 10.10.10.0/24 or 10.10.20.0/24. Packets reach the server farm but replies are dropped by R2 because it has no route back.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip route\nCodes: C - connected, S - static, R - RIP, O - OSPF\n\nGateway of last resort is not set\n\n     10.0.0.0/8 is variably subnetted, 4 subnets\nC       10.10.10.0/24 is directly connected, GigabitEthernet0/0.10\nC       10.10.20.0/24 is directly connected, GigabitEthernet0/0.20\nC       10.10.99.0/30 is directly connected, Serial0/0/0\nS       10.10.30.0/24 [1/0] via 10.10.99.2\n\nR2# show ip route\nCodes: C - connected, S - static, R - RIP, O - OSPF\n\nGateway of last resort is not set\n\n     10.0.0.0/8 is variably subnetted, 2 subnets\nC       10.10.30.0/24 is directly connected, GigabitEthernet0/0\nC       10.10.99.0/30 is directly connected, Serial0/0/0"
+}

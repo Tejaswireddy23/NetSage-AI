@@ -1,0 +1,11 @@
+{
+  "case_id": "GW-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/GATEWAY/GW-002/GW-002.pkt",
+  "topology_note": "R1 provides router-on-a-stick routing via Gi0/0 subinterfaces. Gi0/0.10 serves VLAN 10 and Gi0/0.20 serves VLAN 20. Trunk link from SW1 Gi0/1 to R1 Gi0/0.",
+  "expected_fault": "Router subinterface Gi0/0.10 is administratively down (shutdown), so R1 cannot serve as the gateway for VLAN 10. VLAN 20 works because Gi0/0.20 is up/up.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0         unassigned      YES unset  up                    up\nGigabitEthernet0/0.10      10.10.10.1      YES manual administratively down down\nGigabitEthernet0/0.20      10.10.20.1      YES manual up                    up\nSerial0/0/0                209.165.200.225 YES manual up                    up\n\nR1# show interfaces GigabitEthernet0/0.10\nGigabitEthernet0/0.10 is administratively down, line protocol is down\n  Hardware is iGbE, address is 0019.aa6b.3401\n  Internet address is 10.10.10.1/24\n  Encapsulation 802.1Q Virtual LAN, Vlan ID  10."
+}

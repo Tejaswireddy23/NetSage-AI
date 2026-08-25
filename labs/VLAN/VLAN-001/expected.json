@@ -1,0 +1,11 @@
+{
+  "case_id": "VLAN-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/VLAN/VLAN-001/VLAN-001.pkt",
+  "topology_note": "SW1 is a Cisco 2960 with VLAN 20 (Accounting, 10.10.20.0/24) and VLAN 30 (Marketing, 10.10.30.0/24). File server is on Fa0/20 in VLAN 20. PC3 is on Fa0/5.",
+  "expected_fault": "Port Fa0/5 is assigned to VLAN 30 (Marketing) instead of VLAN 20 (Accounting), so PC3 is in the wrong broadcast domain and cannot reach VLAN 20 resources.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW1# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Fa0/22, Fa0/23, Fa0/24\n20   Accounting                       active    Fa0/1, Fa0/2, Fa0/3, Fa0/4,\n                                                Fa0/20\n30   Marketing                        active    Fa0/5, Fa0/6, Fa0/7, Fa0/8\n99   Management                       active\n1002 fddi-default                     act/unsup\n1003 token-ring-default               act/unsup\n\nSW1# show interfaces Fa0/5 switchport\nName: Fa0/5\nSwitchport: Enabled\nAdministrative Mode: static access\nOperational Mode: static access\nAdministrative Trunking Encapsulation: dot1q\nNegotiation of Trunking: Off\nAccess Mode VLAN: 30 (Marketing)\nTrunking Native Mode VLAN: 1 (default)\nVoice VLAN: none"
+}

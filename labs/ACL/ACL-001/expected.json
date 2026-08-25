@@ -1,0 +1,11 @@
+{
+  "case_id": "ACL-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ACL/ACL-001/ACL-001.pkt",
+  "topology_note": "R1 has ACL 101 applied inbound on Gi0/0.10 (VLAN 10 interface). Web server is on VLAN 30 at 10.10.30.10.",
+  "expected_fault": "ACL 101 line 20 explicitly denies TCP port 80 (HTTP) traffic from VLAN 10 to host 10.10.30.10. ICMP is permitted on line 10, which is why ping works. The deny rule should be removed or changed to permit.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show access-lists\nExtended IP access list 101\n    10 permit icmp 10.10.10.0 0.0.0.255 any (280 matches)\n    20 deny   tcp 10.10.10.0 0.0.0.255 host 10.10.30.10 eq 80 (156 matches)\n    30 permit ip any any (4520 matches)\n\nR1# show ip interface GigabitEthernet0/0.10\nGigabitEthernet0/0.10 is up, line protocol is up\n  Ingoing access list is 101\n  Outgoing access list is not set"
+}

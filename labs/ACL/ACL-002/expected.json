@@ -1,0 +1,11 @@
+{
+  "case_id": "ACL-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ACL/ACL-002/ACL-002.pkt",
+  "topology_note": "R1 has Gi0/0.30 (internal, VLAN 30 with web server) and S0/0/0 (external, 209.165.200.225/30). ACL 150 exists. NAT is configured and working for outbound.",
+  "expected_fault": "ACL 150 is applied outbound on the internal Gi0/0.30 interface instead of inbound on the external S0/0/0 interface. Inbound internet traffic on S0/0/0 has no ACL (no filtering), but the permit rules on Gi0/0.30 outbound reference the internal IP which never matches post-NAT traffic flow. The ACL should be applied inbound on S0/0/0 and reference the public IP.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show access-lists\nExtended IP access list 150\n    10 permit tcp any host 10.10.30.10 eq 80 (0 matches)\n    20 permit tcp any host 10.10.30.10 eq 443 (0 matches)\n    30 permit icmp any any (45 matches)\n    40 deny   ip any any (1280 matches)\n\nR1# show ip interface GigabitEthernet0/0.30\nGigabitEthernet0/0.30 is up, line protocol is up\n  Ingoing access list is not set\n  Outgoing access list is 150\n\nR1# show ip interface Serial0/0/0\nSerial0/0/0 is up, line protocol is up\n  Ingoing access list is not set\n  Outgoing access list is not set"
+}

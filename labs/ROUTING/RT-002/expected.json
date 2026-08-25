@@ -1,0 +1,11 @@
+{
+  "case_id": "RT-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ROUTING/RT-002/RT-002.pkt",
+  "topology_note": "R1 (S0/0/0 = 10.10.99.1/30) connects to R2 (S0/0/0 = 10.10.99.2/30). R2 connects to the branch at 192.168.1.0/24 via Gi0/0. Static routes are used.",
+  "expected_fault": "Static route to 192.168.1.0/24 on R1 points to next-hop 10.10.99.5, which does not exist on the serial link (the valid peer is 10.10.99.2). The link being up is confirmed but the next-hop is unreachable.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip route\nCodes: C - connected, S - static, R - RIP, O - OSPF\n\nGateway of last resort is not set\n\n     10.0.0.0/8 is variably subnetted, 3 subnets\nC       10.10.10.0/24 is directly connected, GigabitEthernet0/0.10\nC       10.10.20.0/24 is directly connected, GigabitEthernet0/0.20\nC       10.10.99.0/30 is directly connected, Serial0/0/0\nS    192.168.1.0/24 [1/0] via 10.10.99.5\n\nR1# show interfaces Serial0/0/0\nSerial0/0/0 is up, line protocol is up\n  Hardware is GT96K Serial\n  Internet address is 10.10.99.1/30\n  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec\n\nR1# ping 10.10.99.2\nType escape sequence to abort.\n!!!!!\nSuccess rate is 100 percent (5/5)\n\nR1# ping 192.168.1.1\nType escape sequence to abort.\n.....\nSuccess rate is 0 percent (0/5)"
+}

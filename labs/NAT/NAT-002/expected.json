@@ -1,0 +1,11 @@
+{
+  "case_id": "NAT-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/NAT/NAT-002/NAT-002.pkt",
+  "topology_note": "R1 performs PAT via S0/0/0 to ISP. Gi0/0.10 and Gi0/0.20 are inside interfaces. NAT ACL controls which source networks are translated.",
+  "expected_fault": "NAT access list 10 only permits the 10.10.10.0/24 network. The 10.10.20.0/24 network is not included, so VLAN 20 traffic is never translated and is dropped at the ISP edge.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip nat translations\nPro Inside global       Inside local        Outside local      Outside global\ntcp 209.165.200.225:1024 10.10.10.11:1025   8.8.8.8:80         8.8.8.8:80\ntcp 209.165.200.225:1025 10.10.10.12:1026   8.8.4.4:443        8.8.4.4:443\n\nR1# show running-config | include nat\nip nat inside source list 10 interface Serial0/0/0 overload\n\nR1# show access-lists\nStandard IP access list 10\n    10 permit 10.10.10.0, wildcard bits 0.0.0.255 (285 matches)\n\nR1# show running-config interface GigabitEthernet0/0.10\ninterface GigabitEthernet0/0.10\n encapsulation dot1Q 10\n ip address 10.10.10.1 255.255.255.0\n ip nat inside\n\nR1# show running-config interface GigabitEthernet0/0.20\ninterface GigabitEthernet0/0.20\n encapsulation dot1Q 20\n ip address 10.10.20.1 255.255.255.0\n ip nat inside\n\nR1# show running-config interface Serial0/0/0\ninterface Serial0/0/0\n ip address 209.165.200.225 255.255.255.252\n ip nat outside"
+}

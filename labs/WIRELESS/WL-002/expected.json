@@ -1,0 +1,11 @@
+{
+  "case_id": "WL-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/WIRELESS/WL-002/WL-002.pkt",
+  "topology_note": "AP1 broadcasts 'Guest-WiFi' on VLAN 99. Guest clients get IPs via DHCP from R1 (10.10.99.0/24 pool). 8 guest devices are currently connected.",
+  "expected_fault": "Client isolation (peer-to-peer blocking) is not enabled on the Guest-WiFi SSID \u2014 the config shows 'no peer-to-peer blocking'. Guest clients can communicate directly with each other, violating the isolation security policy.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "AP1# show dot11 associations\n\n802.11 Client Stations on Dot11Radio0:\nSSID [Guest-WiFi] :\nMAC Address    IP address      Device        Name\n00a0.c9f1.0001 10.10.99.10     PC-Wireless   Guest1\n00a0.c9f1.0002 10.10.99.11     PC-Wireless   Guest2\n00a0.c9f1.0003 10.10.99.12     PC-Wireless   Guest3\n\nAP1# show running-config | section dot11\ninterface Dot11Radio0\n ssid Guest-WiFi\n  vlan 99\n  authentication open\n  guest-mode\n no peer-to-peer blocking\n speed basic-1.0 2.0 5.5 11.0\n\nGuest1> ping 10.10.99.11\nReply from 10.10.99.11: bytes=32 time=3ms TTL=128\nReply from 10.10.99.11: bytes=32 time=2ms TTL=128"
+}

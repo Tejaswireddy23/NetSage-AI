@@ -1,0 +1,11 @@
+{
+  "case_id": "WL-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/WIRELESS/WL-003/WL-003.pkt",
+  "topology_note": "AP1 connects to SW1 Fa0/24 (trunk). VLAN 99 (Guest) DHCP pool exists on R1. Corporate-WiFi (VLAN 10) works. AP1 serves both SSIDs.",
+  "expected_fault": "The trunk port Fa0/24 on SW1 (connecting to the AP) only allows VLANs 1 and 10 \u2014 VLAN 99 (Guest) is not in the allowed list. Guest-WiFi DHCP DISCOVERs tagged for VLAN 99 are dropped at the switch. The correctly configured DHCP pool on R1 is a red herring.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip dhcp pool\n\nPool GUEST-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 254\n Leased addresses               : 0\n Pending event                  : none\n 1 subnet is currently in the pool :\n Current index        IP address range                    Leased addresses\n 10.10.99.1           10.10.99.1       - 10.10.99.254    0\n\nR1# show running-config | section dhcp\nip dhcp pool GUEST-POOL\n network 10.10.99.0 255.255.255.0\n default-router 10.10.99.1\n dns-server 8.8.8.8\n\nSW1# show interfaces Fa0/24 trunk\nPort        Mode         Encapsulation  Status        Native vlan\nFa0/24      on           802.1q         trunking      1\n\nPort        Vlans allowed on trunk\nFa0/24      1,10\n\nPort        Vlans allowed and active in management domain\nFa0/24      1,10\n\nR1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0.10      10.10.10.1      YES manual up                    up\nGigabitEthernet0/0.99      10.10.99.1      YES manual up                    up"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "GW-005",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/GATEWAY/GW-005/GW-005.pkt",
+  "topology_note": "MLS1 is a 3560 L3 switch. SVI VLAN 10 = 10.10.10.1/24, SVI VLAN 20 = 10.10.20.1/24. Trunk Gi0/1 connects to an access switch SW2.",
+  "expected_fault": "The 'ip routing' command has not been enabled on the L3 switch (show run confirms 'no ip routing'). Without it, the switch cannot route between VLANs even though both SVIs are up. The pruned VLAN 30 on the trunk is a red herring \u2014 it is irrelevant to the inter-VLAN routing failure.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "MLS1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nVlan10                     10.10.10.1      YES manual up                    up\nVlan20                     10.10.20.1      YES manual up                    up\nGigabitEthernet0/1         unassigned      YES unset  up                    up\n\nMLS1# show ip route\nCodes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP\n       O - OSPF, P - IS-IS, E - EGP\nGateway of last resort is not set\n\n     10.0.0.0/24 is subnetted, 2 subnets\nC       10.10.10.0 is directly connected, Vlan10\nC       10.10.20.0 is directly connected, Vlan20\n\nMLS1# show interfaces trunk\nPort        Mode         Encapsulation  Status        Native vlan\nGi0/1       on           802.1q         trunking      1\n\nPort        Vlans allowed on trunk\nGi0/1       1,10,20,30\n\nPort        Vlans allowed and active in management domain\nGi0/1       1,10,20\n\nPort        Vlans in spanning tree forwarding state and not pruned\nGi0/1       1,10,20\n\nMLS1# show running-config | include ip routing\nno ip routing"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "DHCP-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DHCP/DHCP-002/DHCP-002.pkt",
+  "topology_note": "R1 is the DHCP server. VLAN 10 uses 10.10.10.0/24 with gateway 10.10.10.1. DHCP pool name is VLAN10-POOL.",
+  "expected_fault": "DHCP pool VLAN10-POOL is configured with the wrong network statement \u2014 10.10.20.0/24 instead of 10.10.10.0/24. Clients receive addresses from the wrong subnet and cannot communicate on their actual VLAN.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip dhcp pool\n\nPool VLAN10-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 254\n Leased addresses               : 5\n Pending event                  : none\n 1 subnet is currently in the pool :\n Current index        IP address range                    Leased addresses\n 10.10.20.6           10.10.20.1       - 10.10.20.254    5\n\nR1# show running-config | section dhcp\nip dhcp pool VLAN10-POOL\n network 10.10.20.0 255.255.255.0\n default-router 10.10.10.1\n dns-server 10.10.10.5\nip dhcp excluded-address 10.10.20.1 10.10.20.5"
+}

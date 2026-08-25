@@ -1,0 +1,11 @@
+{
+  "case_id": "VLAN-005",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/VLAN/VLAN-005/VLAN-005.pkt",
+  "topology_note": "SW1 Fa0/12 connects a new PC for the Sales team (VLAN 10). R1 performs router-on-a-stick routing. An inbound ACL 110 exists on R1's Gi0/0.10 subinterface.",
+  "expected_fault": "Port Fa0/12 is configured as a trunk port instead of an access port in VLAN 10. The PC cannot interpret 802.1Q-tagged frames and fails to communicate. The ACL on R1 is a red herring \u2014 it correctly permits VLAN 10 traffic.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW1# show interfaces Fa0/12 switchport\nName: Fa0/12\nSwitchport: Enabled\nAdministrative Mode: trunk\nOperational Mode: trunk\nAdministrative Trunking Encapsulation: dot1q\nNegotiation of Trunking: On\nTrunking Native Mode VLAN: 1 (default)\nTrunking VLANs Enabled: ALL\n\nSW1# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Fa0/22, Fa0/23, Fa0/24\n10   Sales                            active    Fa0/1, Fa0/2, Fa0/3\n20   HR                               active    Fa0/6, Fa0/7, Fa0/8\n1002 fddi-default                     act/unsup\n\nR1# show access-lists\nExtended IP access list 110\n    10 permit ip 10.10.10.0 0.0.0.255 any (385 matches)\n    20 permit ip any 10.10.10.0 0.0.0.255 (220 matches)\n    30 deny   ip any any"
+}

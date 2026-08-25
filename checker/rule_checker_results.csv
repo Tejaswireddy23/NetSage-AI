@@ -1,0 +1,4 @@
+case_id,check_name,severity,description,evidence_line
+VLAN-004,missing_vlan,High,"VLAN 40 expected by topology but not found in show vlan brief (present: [1, 10, 20, 1002, 1003])",VLAN 40 not found
+GW-002,interface_down,Medium,GigabitEthernet0/0.10 is administratively down — verify whether shutdown is intentional,GigabitEthernet0/0.10      10.10.10.1      YES manual administratively down down
+DHCP-002,gateway_mismatch,High,DHCP pool VLAN10-POOL: default-router 10.10.10.1 is outside network 10.10.20.0/255.255.255.0,network 10.10.20.0 255.255.255.0 / default-router 10.10.10.1

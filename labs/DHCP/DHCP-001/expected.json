@@ -1,0 +1,11 @@
+{
+  "case_id": "DHCP-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DHCP/DHCP-001/DHCP-001.pkt",
+  "topology_note": "R1 is the DHCP server for VLAN 10 (10.10.10.0/24). Pool name VLAN10-POOL. VLAN 10 has 28 active hosts. DHCP pool was configured with a /27 network.",
+  "expected_fault": "DHCP pool for VLAN 10 is completely exhausted \u2014 all 30 addresses in the /27 scope are leased. New clients receive no offer and fall back to APIPA. The pool should be expanded to a /24 to accommodate all hosts.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip dhcp pool\n\nPool VLAN10-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 30\n Leased addresses               : 30\n Pending event                  : none\n 0 subnet is currently in the pool :\n Current index        IP address range                    Leased addresses\n 10.10.10.31          10.10.10.1       - 10.10.10.30     30\n\nR1# show ip dhcp binding\nIP address       Client-ID/              Lease expiration        Type\n                 Hardware address\n10.10.10.1       0100.1a2b.3c01          Aug 09 2026 08:00 AM    Automatic\n10.10.10.2       0100.1a2b.3c02          Aug 09 2026 08:01 AM    Automatic\n...\n10.10.10.30      0100.1a2b.3c1e          Aug 09 2026 08:30 AM    Automatic\n\nR1# show ip dhcp server statistics\nMemory usage         42352\nAddress pools        1\nDatabase agents      0\nAutomatic bindings   30\nManual bindings      0\nExpired bindings     0\nMalformed messages   0\nMessage              Received\nBOOTREQUEST          0\nDHCPDISCOVER         45\nDHCPREQUEST          30\nDHCPINFORM           0\nDHCPRELEASE          0\nDHCPDECLINE          0\nMessage              Sent\nBOOTREPLY            0\nDHCPOFFER            30\nDHCPACK              30\nDHCPNAK              15"
+}

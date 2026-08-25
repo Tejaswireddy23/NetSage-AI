@@ -1,0 +1,11 @@
+{
+  "case_id": "DNS-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DNS/DNS-003/DNS-003.pkt",
+  "topology_note": "R1 is the DHCP server. DNS server is at 10.10.10.5 on VLAN 10. 10 PCs in VLAN 10.",
+  "expected_fault": "The DHCP pool is missing the dns-server option entirely. PCs receive an IP and gateway via DHCP but no DNS server address, so all name resolution fails.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show running-config | section dhcp\nip dhcp pool VLAN10-POOL\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.1\n\nR1# show ip dhcp binding\nIP address       Client-ID/              Lease expiration        Type\n                 Hardware address\n10.10.10.11      0100.1a2b.3c01          Aug 09 2026 08:00 AM    Automatic\n10.10.10.12      0100.1a2b.3c02          Aug 09 2026 08:01 AM    Automatic\n\nC:\\> ipconfig /all\nEthernet adapter Ethernet0:\n   IPv4 Address. . . . . . . . . : 10.10.10.11\n   Subnet Mask . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . : 10.10.10.1\n   DNS Servers . . . . . . . . . :"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "NAT-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/NAT/NAT-001/NAT-001.pkt",
+  "topology_note": "R1 has Gi0/0.10 (10.10.10.1/24, internal) and S0/0/0 (209.165.200.225/30, external to ISP). PAT (overload) is configured.",
+  "expected_fault": "The interfaces are not designated as NAT inside or NAT outside (ip nat inside / ip nat outside commands are missing from both interface configurations). NAT cannot function without these designations, so no translations are created.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip nat translations\n(no translations found)\n\nR1# show ip nat statistics\nTotal active translations: 0\nOutside interfaces: (none)\nInside interfaces: (none)\nHits: 0  Misses: 0\n\nR1# show running-config | include nat\nip nat inside source list 1 interface Serial0/0/0 overload\naccess-list 1 permit 10.10.10.0 0.0.0.255\n\nR1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0.10      10.10.10.1      YES manual up                    up\nSerial0/0/0                209.165.200.225 YES manual up                    up\n\nR1# show running-config interface GigabitEthernet0/0.10\ninterface GigabitEthernet0/0.10\n encapsulation dot1Q 10\n ip address 10.10.10.1 255.255.255.0\n\nR1# show running-config interface Serial0/0/0\ninterface Serial0/0/0\n ip address 209.165.200.225 255.255.255.252"
+}

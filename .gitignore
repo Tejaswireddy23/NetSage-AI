@@ -1,0 +1,9 @@
+# Secrets and local environments
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Front-end build output
+dashboard/node_modules/
+dashboard/dist/

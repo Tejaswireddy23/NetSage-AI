@@ -1,0 +1,11 @@
+{
+  "case_id": "NAT-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/NAT/NAT-003/NAT-003.pkt",
+  "topology_note": "R1 uses a NAT pool (NATPOOL) with a small range of public IPs for PAT. S0/0/0 is the outside interface. About 50 users are active.",
+  "expected_fault": "NAT pool NATPOOL contains only 4 public IP addresses (209.165.200.225-228) with non-overload (one-to-one) mapping. When all 4 are allocated, additional translations fail (312 misses). The pool should use overload (PAT) or be expanded.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip nat statistics\nTotal active translations: 4\nPeak translations: 4, occurred 14:32:10 ago\nOutside interfaces:\n  Serial0/0/0\nInside interfaces:\n  GigabitEthernet0/0.10, GigabitEthernet0/0.20\nHits: 12840  Misses: 312\nExpired translations: 8200\nDynamic mappings:\n-- Inside Source\n[Id: 1] access-list 10 pool NATPOOL refcount 4\n pool NATPOOL: netmask 255.255.255.252\n        start 209.165.200.225 end 209.165.200.228\n        type generic, total addresses 4, allocated 4 (100%), misses 312\n\nR1# show ip nat translations\nPro Inside global       Inside local        Outside local      Outside global\ntcp 209.165.200.225:1024 10.10.10.11:5000   93.184.216.34:80   93.184.216.34:80\ntcp 209.165.200.226:1024 10.10.10.12:5001   93.184.216.34:443  93.184.216.34:443\ntcp 209.165.200.227:1024 10.10.20.15:3000   8.8.8.8:443        8.8.8.8:443\ntcp 209.165.200.228:1024 10.10.20.20:4000   1.1.1.1:80         1.1.1.1:80"
+}

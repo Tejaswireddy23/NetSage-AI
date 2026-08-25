@@ -1,0 +1,11 @@
+{
+  "case_id": "ACL-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ACL/ACL-004/ACL-004.pkt",
+  "topology_note": "R1 has ACL 140 on Gi0/0.10 inbound. VLAN 10 is 10.10.10.0/24, server VLAN 30 is 10.10.30.0/24.",
+  "expected_fault": "ACL 140 line 10 explicitly denies all ICMP traffic from VLAN 10 to VLAN 30, blocking ping while allowing TCP (HTTP/SSH) and UDP through subsequent permit rules.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show access-lists\nExtended IP access list 140\n    10 deny   icmp 10.10.10.0 0.0.0.255 10.10.30.0 0.0.0.255 (87 matches)\n    20 permit tcp any any (3400 matches)\n    30 permit udp any any (1200 matches)\n    40 permit ip any any (560 matches)\n\nR1# show ip interface GigabitEthernet0/0.10\nGigabitEthernet0/0.10 is up, line protocol is up\n  Ingoing access list is 140\n  Outgoing access list is not set"
+}

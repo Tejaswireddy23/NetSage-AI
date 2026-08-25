@@ -1,0 +1,11 @@
+{
+  "case_id": "DHCP-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DHCP/DHCP-003/DHCP-003.pkt",
+  "topology_note": "R1 (10.10.10.1) is the DHCP server for all VLANs. MLS1 is an L3 switch with SVIs. VLAN 10 PCs are on the same subnet as R1. VLAN 40 PCs are on a different subnet behind MLS1's SVI Vlan40 (10.10.40.1).",
+  "expected_fault": "The ip helper-address command is missing on MLS1's SVI Vlan40 interface. DHCP broadcast DISCOVERs from VLAN 40 clients are not relayed to the DHCP server (R1) on the remote subnet. VLAN 10 works because it is on the same subnet as R1.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "MLS1# show running-config interface Vlan40\ninterface Vlan40\n ip address 10.10.40.1 255.255.255.0\n no shutdown\n\nMLS1# show running-config interface Vlan10\ninterface Vlan10\n ip address 10.10.10.2 255.255.255.0\n ip helper-address 10.10.10.1\n no shutdown\n\nR1# show ip dhcp pool\n\nPool VLAN40-POOL :\n Utilization mark (high/low)    : 100 / 0\n Subnet size (first/next)       : 0 / 0\n Total addresses                : 254\n Leased addresses               : 0\n Pending event                  : none\n 1 subnet is currently in the pool :\n Current index        IP address range                    Leased addresses\n 10.10.40.1           10.10.40.1       - 10.10.40.254    0"
+}

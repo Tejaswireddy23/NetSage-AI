@@ -1,0 +1,11 @@
+{
+  "case_id": "WL-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/WIRELESS/WL-001/WL-001.pkt",
+  "topology_note": "AP1 (Cisco Lightweight AP or autonomous AP in Packet Tracer) broadcasts two SSIDs: 'Corporate-WiFi' mapped to VLAN 10 and 'Guest-WiFi'. AP1 uplink on SW1 Fa0/24 is a trunk. VLAN 10 = Corporate (10.10.10.0/24), VLAN 99 = Guest (10.10.99.0/24).",
+  "expected_fault": "The 'Guest-WiFi' SSID is mapped to VLAN 10 (Corporate) instead of VLAN 99 (Guest). Guest users are placed directly on the corporate network with full access to internal resources.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW1# show interfaces Fa0/24 trunk\nPort        Mode         Encapsulation  Status        Native vlan\nFa0/24      on           802.1q         trunking      1\n\nPort        Vlans allowed on trunk\nFa0/24      1,10,99\n\nPort        Vlans allowed and active in management domain\nFa0/24      1,10,99\n\nAP Configuration Summary:\nSSID: Corporate-WiFi\n  VLAN: 10\n  Security: WPA2-Enterprise\nSSID: Guest-WiFi\n  VLAN: 10\n  Security: WPA2-PSK\n\nSW1# show vlan brief\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Fa0/22, Fa0/23\n10   Corporate                        active    Fa0/1, Fa0/2, Fa0/3\n99   Guest                            active\n1002 fddi-default                     act/unsup"
+}

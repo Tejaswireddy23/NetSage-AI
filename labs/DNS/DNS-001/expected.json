@@ -1,0 +1,11 @@
+{
+  "case_id": "DNS-001",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DNS/DNS-001/DNS-001.pkt",
+  "topology_note": "R1 is the DHCP server for VLAN 10 (10.10.10.0/24). A DNS server runs at 10.10.10.5 on Fa0/20 of SW1. DHCP pushes DNS settings to clients.",
+  "expected_fault": "DHCP pool distributes the wrong DNS server address \u2014 10.10.10.50 (non-existent) instead of 10.10.10.5 (the actual DNS server). Clients send DNS queries to a host that does not exist.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show running-config | section dhcp\nip dhcp pool VLAN10-POOL\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.1\n dns-server 10.10.10.50\n\nC:\\> ipconfig /all\nEthernet adapter Ethernet0:\n   IPv4 Address. . . . . . . . . : 10.10.10.11\n   Subnet Mask . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . : 10.10.10.1\n   DNS Servers . . . . . . . . . : 10.10.10.50\n\nC:\\> ping 10.10.10.5\nReply from 10.10.10.5: bytes=32 time<1ms TTL=128\nReply from 10.10.10.5: bytes=32 time<1ms TTL=128"
+}

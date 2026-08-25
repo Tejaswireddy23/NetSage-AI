@@ -1,0 +1,11 @@
+{
+  "case_id": "RT-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ROUTING/RT-004/RT-004.pkt",
+  "topology_note": "R1 (Gi0/0 = 10.10.99.1/30) connects to R2 (Gi0/0 = 10.10.99.2/30). Both routers run OSPF process 1.",
+  "expected_fault": "R1's Gi0/0 is in OSPF Area 0 while R2's Gi0/0 is in OSPF Area 1. OSPF requires matching area IDs on a shared link to form adjacency. The network statements and wildcard masks are correct \u2014 a red herring that suggests the OSPF config looks fine at first glance.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip ospf neighbor\n(no neighbors found)\n\nR1# show ip ospf interface GigabitEthernet0/0\nGigabitEthernet0/0 is up, line protocol is up\n  Internet Address 10.10.99.1/30, Area 0, Attached via Network Statement\n  Process ID 1, Router ID 1.1.1.1, Network Type BROADCAST, Cost: 1\n  Transmit Delay is 1 sec, State DR, Priority 1\n  Hello 10, Dead 40, Retransmit 5\n\nR2# show ip ospf interface GigabitEthernet0/0\nGigabitEthernet0/0 is up, line protocol is up\n  Internet Address 10.10.99.2/30, Area 1, Attached via Network Statement\n  Process ID 1, Router ID 2.2.2.2, Network Type BROADCAST, Cost: 1\n  Transmit Delay is 1 sec, State DR, Priority 1\n  Hello 10, Dead 40, Retransmit 5\n\nR1# show ip protocols\nRouting Protocol is \"ospf 1\"\n  Routing for Networks:\n    10.10.99.0 0.0.0.3 area 0\n\nR2# show ip protocols\nRouting Protocol is \"ospf 1\"\n  Routing for Networks:\n    10.10.99.0 0.0.0.3 area 1"
+}

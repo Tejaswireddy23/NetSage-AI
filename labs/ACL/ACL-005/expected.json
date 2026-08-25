@@ -1,0 +1,11 @@
+{
+  "case_id": "ACL-005",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ACL/ACL-005/ACL-005.pkt",
+  "topology_note": "R1 has ACL 105 applied inbound on Gi0/0.10. VLAN 10 uses 10.10.10.0/24 with about 60 hosts.",
+  "expected_fault": "ACL 105 line 10 uses wildcard mask 0.0.0.127 which only matches hosts 10.10.10.0 through 10.10.10.127. Hosts in the .128-.254 range do not match line 10, fall through to the deny on line 20, and are blocked. The wildcard mask should be 0.0.0.255 to cover the entire /24.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show access-lists\nExtended IP access list 105\n    10 permit ip 10.10.10.0 0.0.0.127 host 10.10.30.5 (520 matches)\n    20 deny   ip any host 10.10.30.5 (340 matches)\n    30 permit ip any any (2800 matches)\n\nR1# show ip interface GigabitEthernet0/0.10\nGigabitEthernet0/0.10 is up, line protocol is up\n  Ingoing access list is 105\n  Outgoing access list is not set"
+}

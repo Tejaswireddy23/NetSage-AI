@@ -1,0 +1,11 @@
+{
+  "case_id": "DNS-002",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/DNS/DNS-002/DNS-002.pkt",
+  "topology_note": "R1 is the gateway and has ACL 120 applied inbound on Gi0/0.10. DNS server is at 10.10.10.5 on VLAN 10. DHCP correctly assigns dns-server 10.10.10.5.",
+  "expected_fault": "ACL 120 on R1 Gi0/0.10 explicitly denies UDP port 53 (line 40) before the permit-all on line 50, blocking DNS query traffic. The DHCP dns-server configuration is correct \u2014 a red herring that makes it appear the DNS setup is fine.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show running-config | section dhcp\nip dhcp pool VLAN10-POOL\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.1\n dns-server 10.10.10.5\n\nR1# show access-lists\nExtended IP access list 120\n    10 permit icmp any any (1520 matches)\n    20 permit tcp any any eq 80 (890 matches)\n    30 permit tcp any any eq 443 (672 matches)\n    40 deny   udp any any eq 53 (342 matches)\n    50 permit ip any any (105 matches)\n\nR1# show ip interface GigabitEthernet0/0.10\nGigabitEthernet0/0.10 is up, line protocol is up\n  Ingoing access list is 120\n  Outgoing access list is not set"
+}

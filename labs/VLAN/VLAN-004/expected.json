@@ -1,0 +1,11 @@
+{
+  "case_id": "VLAN-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/VLAN/VLAN-004/VLAN-004.pkt",
+  "topology_note": "SW2 is a 2960 switch. Fa0/10 was supposed to be in VLAN 40 (Guest, 10.10.40.0/24). Router-on-a-stick R1 provides inter-VLAN routing on Gi0/0 subinterfaces.",
+  "expected_fault": "VLAN 40 has not been created on SW2 (it does not appear in show vlan brief), so the port is assigned to a non-existent VLAN and all traffic is dropped.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "SW2# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n1    default                          active    Fa0/22, Fa0/23, Fa0/24\n10   Sales                            active    Fa0/1, Fa0/2, Fa0/3\n20   HR                               active    Fa0/6, Fa0/7, Fa0/8\n1002 fddi-default                     act/unsup\n1003 token-ring-default               act/unsup\n\nSW2# show interfaces Fa0/10 switchport\nName: Fa0/10\nSwitchport: Enabled\nAdministrative Mode: static access\nOperational Mode: static access\nAdministrative Trunking Encapsulation: dot1q\nAccess Mode VLAN: 40 (!)\nTrunking Native Mode VLAN: 1 (default)\n\nSW2# show interfaces Fa0/10 status\nPort      Name    Status       Vlan       Duplex  Speed Type\nFa0/10            connected    40         a-full  a-100 10/100BaseTX"
+}

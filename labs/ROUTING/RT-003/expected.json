@@ -1,0 +1,11 @@
+{
+  "case_id": "RT-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/ROUTING/RT-003/RT-003.pkt",
+  "topology_note": "R1 (Gi0/0 = 10.10.99.1/30) and R2 (Gi0/0 = 10.10.99.2/30) run OSPF Area 0. R2 also connects to 172.16.10.0/24 on Gi0/1.",
+  "expected_fault": "The 172.16.10.0 network is not included in R2's OSPF network statements (only 10.10.99.0 is advertised). OSPF does not advertise Gi0/1's subnet, so R1 never learns the route.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip ospf neighbor\n\nNeighbor ID     Pri   State           Dead Time   Address         Interface\n2.2.2.2           1   FULL/BDR        00:00:35    10.10.99.2      Gi0/0\n\nR1# show ip route ospf\n(no OSPF routes found)\n\nR2# show ip protocols\nRouting Protocol is \"ospf 1\"\n  Outgoing update filter list for all interfaces is not set\n  Incoming update filter list for all interfaces is not set\n  Router ID 2.2.2.2\n  Number of areas in this router is 1. 1 normal 0 stub 0 nssa\n  Routing for Networks:\n    10.10.99.0 0.0.0.3 area 0\n\nR2# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0         10.10.99.2      YES manual up                    up\nGigabitEthernet0/1         172.16.10.1     YES manual up                    up"
+}

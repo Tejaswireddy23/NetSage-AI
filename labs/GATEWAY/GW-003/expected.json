@@ -1,0 +1,11 @@
+{
+  "case_id": "GW-003",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/GATEWAY/GW-003/GW-003.pkt",
+  "topology_note": "R1 Gi0/0.20 is the VLAN 20 gateway. VLAN 20 uses 10.10.20.0/24. About 30 PCs are in this VLAN.",
+  "expected_fault": "R1's Gi0/0.20 subinterface is configured with a /28 subnet mask (255.255.255.240) instead of /24 (255.255.255.0), so only hosts in the 10.10.20.0-10.10.20.15 range are considered local; hosts above .15 are unreachable from the gateway.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "R1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0         unassigned      YES unset  up                    up\nGigabitEthernet0/0.10      10.10.10.1      YES manual up                    up\nGigabitEthernet0/0.20      10.10.20.1      YES manual up                    up\nGigabitEthernet0/0.30      10.10.30.1      YES manual up                    up\n\nR1# show running-config interface GigabitEthernet0/0.20\ninterface GigabitEthernet0/0.20\n encapsulation dot1Q 20\n ip address 10.10.20.1 255.255.255.240"
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "GW-004",
+  "status": "REQUIRES PACKET TRACER",
+  "packet_tracer_file": "labs/GATEWAY/GW-004/GW-004.pkt",
+  "topology_note": "MLS1 is a Layer 3 switch (3560) with SVIs for VLANs 10, 20, and 30. VLAN 30 ports are on Fa0/15-Fa0/18. ip routing is enabled.",
+  "expected_fault": "The SVI for VLAN 30 has IP address 10.10.30.2 but the PCs are configured with default gateway 10.10.30.1. No device owns 10.10.30.1 so the gateway is unreachable.",
+  "expected_fix": [],
+  "verification_commands": [],
+  "expected_verification_result": "NOT VERIFIED - requires Packet Tracer",
+  "source_evidence": "MLS1# show ip interface brief\nInterface                  IP-Address      OK? Method Status                Protocol\nVlan10                     10.10.10.1      YES manual up                    up\nVlan20                     10.10.20.1      YES manual up                    up\nVlan30                     10.10.30.2      YES manual up                    up\nFastEthernet0/15           unassigned      YES unset  up                    up\nFastEthernet0/16           unassigned      YES unset  up                    up\nFastEthernet0/17           unassigned      YES unset  up                    up\nFastEthernet0/18           unassigned      YES unset  up                    up\n\nMLS1# show vlan brief\n\nVLAN Name                             Status    Ports\n---- -------------------------------- --------- -------------------------------\n10   Sales                            active    Fa0/1, Fa0/2, Fa0/3\n20   HR                               active    Fa0/6, Fa0/7, Fa0/8\n30   Engineering                      active    Fa0/15, Fa0/16, Fa0/17, Fa0/18"
+}
